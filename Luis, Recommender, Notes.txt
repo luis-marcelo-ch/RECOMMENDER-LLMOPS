@@ -1,0 +1,114 @@
+RUN
+	NEW TERMINAL
+		from drop-down select -> Command prompt
+
+create virtual environment
+	python -m venv venv
+activate the environment
+	venv\Scripts\activate
+create an environment file ".env"
+	.env
+create 2 variables
+	GROQ_API_KEY=""
+		go to GROQ website, go to "API Keys", create key using "anime" as name, copy and paste to .env 
+	HUGGINGFACEHUB_API_TOKEN=""
+		go to HuggingFace website, go to "Profile" section, click on "Access Tokens", 
+			click on create "New Token" make sure it is in "Write" mode,
+				use "anime" as name, copy and paste to .env 
+copy
+	data/anime_with_synopsis.csv
+	requirements.txt
+
+to trigger "setup.py" in the terminal type
+terminal:
+	pip install -e .
+
+copy to the main folder the folders
+	app		(main application)
+	config		(database setup)
+	utils
+	pipeline
+	src
+inside each folder create the file "__init__.py" so the folder is a package
+
+to install the folders as packages run again
+terminal:
+	pip install -e .
+
+in file "config.py" initialise the variables
+	GROQ_API_KEY
+	MODEL_NAME
+		go to website
+			https://console.groq.com/docs/models
+		select model and copy name
+			"llama-3.1-8b-instant"
+	
+in file "vector_store.py" enter HuggingFace model, 
+	select from HuggingFace/model website the model "sentence-transformers/all-MiniLM-L6-v2", enter
+		"all-MiniLM-L6-v2"
+
+in file "prompt_template.py" enter anime prompt using template from ChatGPT, go to website 
+	https://github.com/data-guru0/ANIME-RECOMMENDER-SYSTEM-LLMOPS/tree/main/src
+		copy contents of file
+			prompt_template.py
+
+MOVE file "build_pipeline" from folder "pipeline" to main folder
+
+in file "vector_store.py" change
+	#from langchain.text_splitter import CharacterTextSplitter
+	to
+	from langchain_text_splitters import CharacterTextSplitter
+
+**********************************************
+To build the vector store
+	python build_pipeline.py
+**********************************************
+
+To create the application, 
+	create file "app.py" inside "app" folder
+
+in file "recommender.py" change
+	#from langchain.chains import RetrievalQA
+	to
+	from langchain_classic.chains import RetrievalQA
+
+in file "prompt_template.py" change
+	#from langchain.prompts import PromptTemplate
+	to
+	from langchain_core.prompts import PromptTemplate
+
+the model "llama-3.1-8b-instant" is deprecated, see website
+	https://console.groq.com/docs/deprecations
+the new model is "openai/gpt-oss-20b"
+
+**********************************************
+To run app
+	streamlit run app/app.py
+
+it launches the app in
+	http://localhost:8501/
+**********************************************
+
+Docker
+
+Kubernetes
+
+Git
+	installed locally
+
+GitHub
+======
+git branch -M main
+git remote add origin https://github.com/luis-marcelo-ch/RECOMMENDER-LLMOPS.git
+git add .
+
+
+
+
+
+
+GROQ
+anime1
+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
+
+
